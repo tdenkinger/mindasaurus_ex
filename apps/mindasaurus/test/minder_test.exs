@@ -2,20 +2,21 @@ defmodule Mindasaurus.MinderTest do
   use ExUnit.Case, async: true
   doctest Mindasaurus.Minder
 
-  test "accepts a reminder" do
+  setup do
     {:ok, minder} = Mindasaurus.Minder.start_link
+    {:ok, minder: minder}
+  end
+
+  test "accepts a reminder", %{minder: minder} do
     assert Mindasaurus.Minder.create(minder, :uuid12312, "buy coffee") == :ok
     assert Mindasaurus.Minder.create(minder, :uuid12312, "eat food") == :ok
   end
 
-  test "returns an empty list of reminders for a non-existent uuid" do
-    {:ok, minder} = Mindasaurus.Minder.start_link
-
+  test "returns an empty list of reminders for a non-existent uuid", %{minder: minder} do
     assert Mindasaurus.Minder.get(minder, :uuid12312) == []
   end
 
-  test "returns all reminders for a uuid that has them" do
-    {:ok, minder} = Mindasaurus.Minder.start_link
+  test "returns all reminders for a uuid that has them", %{minder: minder} do
     Mindasaurus.Minder.create(minder, :uuid12312, "buy coffee")
     Mindasaurus.Minder.create(minder, :uuid12312, "walk dog")
 
