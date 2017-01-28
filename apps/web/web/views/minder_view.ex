@@ -1,9 +1,15 @@
 defmodule Web.MinderView do
   use Web.Web, :view
 
-  def render("index.json", _) do
+  def render("show.json", %{reminders: reminders}) do
     %{
-      test: "test too"
+      reminders: reminders
+    }
+  end
+
+  def render("create.json", %{status: status}) do
+    %{
+      status: status
     }
   end
 end
