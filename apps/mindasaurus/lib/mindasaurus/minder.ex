@@ -3,8 +3,8 @@ defmodule Mindasaurus.Minder do
 
   # Public API
 
-  def start_link do
-    GenServer.start_link(__MODULE__, :ok, [])
+  def start_link(name \\ MinderMain) do
+    GenServer.start_link(__MODULE__, :ok, [name: name])
   end
 
   def create(server, key, value), do: GenServer.call(server, {:create, key, value})

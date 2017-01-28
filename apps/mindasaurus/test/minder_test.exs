@@ -3,8 +3,8 @@ defmodule Mindasaurus.MinderTest do
   alias Mindasaurus.Minder
 
   setup do
-    {:ok, minder} = Minder.start_link
-    {:ok, minder: minder}
+    Minder.start_link(MinderTest)
+    {:ok, minder: MinderTest}
   end
 
   test "accepts a reminder", %{minder: minder} do
