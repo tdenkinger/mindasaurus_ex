@@ -1,2 +1,0 @@
-defmodule Mindasaurus do
-end
