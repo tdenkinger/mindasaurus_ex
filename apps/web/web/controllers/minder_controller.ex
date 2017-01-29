@@ -11,7 +11,5 @@ defmodule Web.MinderController do
     render conn, "create.json", status: status
   end
 
-  defp build_uuid(id) do
-    String.to_atom("uuid#{id}")
-  end
+  defp build_uuid(id), do: :"uuid#{id}"
 end
