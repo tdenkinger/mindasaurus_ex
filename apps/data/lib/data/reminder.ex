@@ -9,12 +9,16 @@ defmodule Data.Reminder do
     timestamps()
   end
 
-  @required_fields ~w(uuid, reminder)
-  @optional_fields ~w()
+  @allowed_fields ~w(uuid reminder)
 
   def changeset(record, params \\ :empty) do
     record
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @allowed_fields)
+  end
+
+  def save(uuid, reminder) do
+    changeset = changeset(%Data.Reminder{}, %{uuid: uuid, reminder: reminder})
+    Data.Repo.insert!(changeset)
   end
 end
 
