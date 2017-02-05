@@ -22,7 +22,8 @@ defmodule Data.Mixfile do
   defp deps do
     [
       {:ecto,     "~> 2.1.0"},
-      {:postgrex, ">= 0.0.0"}
+      {:postgrex, ">= 0.0.0"},
+      {:uuid,     "~> 1.1" },
     ]
   end
 end
