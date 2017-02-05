@@ -13,6 +13,11 @@ defmodule Domain.MinderTest do
     assert Minder.create(minder, uuid, "eat food") == :ok
   end
 
+  test "errors when a uuid is invalid", %{minder: minder} do
+    status = Minder.create(minder, :bad_id, "buy coffee")
+    assert elem(status, 0) == :error
+  end
+
   test "returns an empty list of reminders for a non-existent uuid", %{minder: minder} do
     uuid = "does_not_exist"
     assert Minder.get(minder, uuid) == []

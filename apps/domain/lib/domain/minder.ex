@@ -16,16 +16,16 @@ defmodule Domain.Minder do
     {:ok, %{}}
   end
 
-  def handle_call({:create, key, value}, _from, values) do
-    {:ok, _reminder} = Data.Reminder.save(key, value)
-
-    {:reply, :ok, values}
+  def handle_call({:create, key, value}, _from, state) do
+    case Data.Reminder.save(key, value) do
+      {:ok, _reminder} -> {:reply, :ok, state}
+      {:error, error}  -> {:reply, {:error, error}, state}
+       _               -> {:reply, :error, state}
+    end
   end
 
-  def handle_call({:get, key}, _from, values) do
-    reminders = Data.Reminder.get(key)
-
-    {:reply, reminders, values}
+  def handle_call({:get, key}, _from, state) do
+    {:reply, Data.Reminder.get(key), state}
   end
 end
 
