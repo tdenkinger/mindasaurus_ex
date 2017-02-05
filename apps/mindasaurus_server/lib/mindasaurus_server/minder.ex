@@ -17,17 +17,15 @@ defmodule Mindasaurus.Minder do
   end
 
   def handle_call({:create, key, value}, _from, values) do
-    values =
-    case Map.has_key?(values, key) do
-      true  -> Map.put(values, key, [value | values[key]])
-      false -> Map.put(values, key, [value])
-    end
+    {:ok, reminder} = Data.Reminder.save(key, value)
 
     {:reply, :ok, values}
   end
 
   def handle_call({:get, key}, _from, values) do
-    {:reply, Map.get(values, key, []) ,values}
+    reminders = Data.Reminder.get(key)
+
+    {:reply, reminders, values}
   end
 end
 

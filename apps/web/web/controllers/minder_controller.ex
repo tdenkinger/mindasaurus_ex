@@ -11,5 +11,5 @@ defmodule Web.MinderController do
     render conn, "create.json", status: status
   end
 
-  defp build_uuid(id), do: :"uuid#{id}"
+  defp build_uuid(id), do: "#{id}"
 end

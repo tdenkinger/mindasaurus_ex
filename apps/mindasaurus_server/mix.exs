@@ -37,6 +37,9 @@ defmodule Mindasaurus.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:data, in_umbrella: true},
+      {:uuid, "~> 1.1"},
+    ]
   end
 end

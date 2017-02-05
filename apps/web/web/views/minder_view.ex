@@ -3,7 +3,7 @@ defmodule Web.MinderView do
 
   def render("show.json", %{reminders: reminders}) do
     %{
-      reminders: reminders
+      reminders: Enum.map(reminders, &reminder_json/1)
     }
   end
 
@@ -11,5 +11,9 @@ defmodule Web.MinderView do
     %{
       status: status
     }
+  end
+
+  defp reminder_json({id, reminder}) do
+    %{id: id, reminder: reminder}
   end
 end
