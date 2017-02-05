@@ -1,6 +1,6 @@
-defmodule Mindasaurus.MinderTest do
+defmodule Domain.MinderTest do
   use ExUnit.Case, async: true
-  alias Mindasaurus.Minder
+  alias Domain.Minder
 
   setup do
     Minder.start_link(MinderTest)

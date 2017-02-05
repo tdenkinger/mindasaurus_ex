@@ -1,4 +1,4 @@
-defmodule Mindasaurus.Minder do
+defmodule Domain.Minder do
   use GenServer
 
   # Public API
@@ -17,7 +17,7 @@ defmodule Mindasaurus.Minder do
   end
 
   def handle_call({:create, key, value}, _from, values) do
-    {:ok, reminder} = Data.Reminder.save(key, value)
+    {:ok, _reminder} = Data.Reminder.save(key, value)
 
     {:reply, :ok, values}
   end

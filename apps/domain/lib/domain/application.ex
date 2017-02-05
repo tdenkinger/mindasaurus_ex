@@ -1,4 +1,4 @@
-defmodule Mindasaurus.Application do
+defmodule Domain.Application do
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -11,12 +11,12 @@ defmodule Mindasaurus.Application do
     # Define workers and child supervisors to be supervised
     children = [
       # Starts a worker by calling: Mindasaurus.Worker.start_link(arg1, arg2, arg3)
-      worker(Mindasaurus.Minder, [MinderMain]),
+      worker(Domain.Minder, [MinderMain]),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Mindasaurus.Supervisor]
+    opts = [strategy: :one_for_one, name: Domain.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

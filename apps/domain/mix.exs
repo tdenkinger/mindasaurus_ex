@@ -1,8 +1,8 @@
-defmodule Mindasaurus.Mixfile do
+defmodule Domain.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :mindasaurus_server,
+    [app: :domain,
      version: "0.1.0",
      build_path: "../../_build",
      config_path: "../../config/config.exs",
@@ -20,7 +20,7 @@ defmodule Mindasaurus.Mixfile do
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
     [extra_applications: [:logger],
-     mod: {Mindasaurus.Application, []}]
+     mod: {Domain.Application, []}]
   end
 
   # Dependencies can be Hex packages:
