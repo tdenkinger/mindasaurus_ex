@@ -6,35 +6,34 @@ defmodule Data.Reminder do
   alias Data.{Reminder, Repo}
 
   schema "reminders" do
-    field :uuid, :string
     field :reminder, :string
+    belongs_to :user, User
 
     timestamps()
   end
 
-  @allowed_fields ~w(uuid reminder)
+  @allowed_fields ~w(reminder user_id)
 
   def changeset(record, params \\ :empty) do
     record
     |> cast(params, @allowed_fields)
   end
 
-  def save(uuid, reminder) do
+  def save(user, reminder) do
     changeset = changeset(
                            %Reminder{},
-                           %{uuid: uuid, reminder: reminder}
+                           %{user_id: user.id, reminder: reminder}
                          )
 
     case Repo.insert(changeset) do
-      {:ok, reminder}     -> {:ok, reminder}
+      {:ok, saved_reminder}     -> {:ok, saved_reminder}
       {:error, changeset} -> {:error, changeset}
     end
   end
 
-  def get(uuid) do
-    (from r in Reminder,
-     where: r.uuid == ^uuid,
-     select: {r.id, r.reminder})
+  def get(user) do
+    (from "reminders",
+     where: [user_id: ^user.id ], select: [:id, :reminder])
     |> Repo.all
   end
 

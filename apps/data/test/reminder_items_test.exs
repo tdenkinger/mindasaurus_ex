@@ -1,40 +1,45 @@
 defmodule Data.ReminderTest do
-  alias Data.{Reminder, Repo}
   use ExUnit.Case, async: true
+
+  alias Data.{Reminder, User, Repo}
 
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
   end
 
   test "Reminders can be added" do
-    uuid = UUID.uuid4(:hex)
-    {:ok, saved_data} = Reminder.save(uuid, "First reminder")
-    assert saved_data.reminder == "First reminder"
+    {:ok, user} = User.save("bob", "bob@example.com", UUID.uuid4(:hex))
+
+    {:ok, reminder} = Reminder.save(user, "First reminder")
+
+    assert reminder.reminder == "First reminder"
+    assert reminder.user_id == user.id
   end
 
   test "Reminders can be retrieved" do
-    uuid = UUID.uuid4(:hex)
-    {:ok, _} = Reminder.save(uuid, "First reminder")
-    {:ok, _} = Reminder.save(uuid, "Second reminder")
+    {:ok, user} = User.save("bob", "bob@example.com", UUID.uuid4(:hex))
 
-    first_reminder  = Reminder.get(uuid) |> Enum.at(0)
-    second_reminder = Reminder.get(uuid) |> Enum.at(1)
+    {:ok, _} = Reminder.save(user, "First reminder")
+    {:ok, _} = Reminder.save(user, "Second reminder")
 
-    assert {_, "First reminder"} = first_reminder
-    assert {_, "Second reminder"} = second_reminder
+    first_reminder  = Reminder.get(user) |> Enum.at(0)
+    second_reminder = Reminder.get(user) |> Enum.at(1)
+
+    assert first_reminder.reminder  == "First reminder"
+    assert second_reminder.reminder == "Second reminder"
   end
 
   test "Reminders can be deleted" do
-    uuid = UUID.uuid4(:hex)
-    {:ok, _} = Reminder.save(uuid, "First reminder")
-    {:ok, _} = Reminder.save(uuid, "Second reminder")
+    {:ok, user} = User.save("bob", "bob@example.com", UUID.uuid4(:hex))
 
-    assert Enum.count(Reminder.get(uuid)) == 2
+    {:ok, first_reminder}  = Reminder.save(user, "First reminder")
+    {:ok, _} = Reminder.save(user, "Second reminder")
 
-    {id,  _} = Enum.at(Reminder.get(uuid), 0)
-    {:ok, _} = Reminder.delete(id)
+    assert Enum.count(Reminder.get(user)) == 2
 
-    assert Enum.count(Reminder.get(uuid)) == 1
+    Reminder.delete(first_reminder.id)
+
+    assert Enum.count(Reminder.get(user)) == 1
   end
 end
 
