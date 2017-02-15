@@ -1,6 +1,16 @@
 defmodule Web.Router do
   use Web.Web, :router
 
+  pipeline :api do
+    plug :accepts, ["json"]
+  end
+
+  scope "/api", Web do
+    pipe_through :api
+
+    resources "/", MinderController, only: [:show, :create]
+  end
+
   # pipeline :browser do
   #   plug :accepts, ["html"]
   #   plug :fetch_session
@@ -9,20 +19,10 @@ defmodule Web.Router do
   #   plug :put_secure_browser_headers
   # end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   # scope "/", Web do
   #   pipe_through :browser # Use the default browser stack
 
   #   get "/", PageController, :index
   # end
-
-  # Other scopes may use custom stacks.
-  scope "/api", Web do
-    pipe_through :api
-
-    resources "/", MinderController, only: [:show, :create]
-  end
 end
+

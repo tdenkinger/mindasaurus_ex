@@ -8,32 +8,24 @@ defmodule Domain.MinderTest do
   end
 
   test "accepts a reminder", %{minder: minder} do
-    uuid = UUID.uuid4(:hex)
-    assert Minder.create(minder, uuid, "buy coffee") == :ok
-    assert Minder.create(minder, uuid, "eat food") == :ok
-  end
+    {:ok, user} = Data.User.save("bob", "bob@example.com", UUID.uuid4(:hex))
 
-  test "errors when a uuid is invalid", %{minder: minder} do
-    status = Minder.create(minder, :bad_id, "buy coffee")
-    assert elem(status, 0) == :error
-  end
-
-  test "returns an empty list of reminders for a non-existent uuid", %{minder: minder} do
-    uuid = "does_not_exist"
-    assert Minder.get(minder, uuid) == []
+    assert Minder.create(minder, user.access_token, "buy coffee") == :ok
+    assert Minder.create(minder, user.access_token, "eat food") == :ok
   end
 
   test "returns all reminders for a uuid", %{minder: minder} do
-    uuid = UUID.uuid4(:hex)
-    assert Minder.get(minder, uuid) == []
+    {:ok, user} = Data.User.save("bob", "bob@example.com", UUID.uuid4(:hex))
 
-    Minder.create(minder, uuid, "buy coffee")
-    Minder.create(minder, uuid, "walk dog")
+    assert Minder.get(minder, user.access_token) == []
 
-    reminders = Minder.get(minder, uuid)
+    Minder.create(minder, user.access_token, "buy coffee")
+    Minder.create(minder, user.access_token, "walk dog")
 
-    assert (Enum.at(reminders, 0) |> elem(1)) == "buy coffee"
-    assert (Enum.at(reminders, 1) |> elem(1)) == "walk dog"
+    reminders = Minder.get(minder, user.access_token)
+
+    assert (Enum.at(reminders, 0)).reminder  == "buy coffee"
+    assert (Enum.at(reminders, 1)).reminder  == "walk dog"
     assert Enum.count(reminders) == 2
   end
 end

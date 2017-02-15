@@ -13,7 +13,7 @@ defmodule Web.MinderView do
     }
   end
 
-  defp reminder_json({id, reminder}) do
+  defp reminder_json(%{id: id, reminder: reminder}) do
     %{id: id, reminder: reminder}
   end
 end

@@ -16,8 +16,8 @@ defmodule Domain.Minder do
     {:ok, %{}}
   end
 
-  def handle_call({:create, key, value}, _from, state) do
-    case Data.Reminder.save(key, value) do
+  def handle_call({:create, access_token, new_reminder}, _from, state) do
+    case Data.Reminder.save(access_token, new_reminder) do
       {:ok, _reminder} -> {:reply, :ok, state}
       {:error, error}  -> {:reply, {:error, error}, state}
        _               -> {:reply, :error, state}

@@ -10,7 +10,7 @@ defmodule Data.ReminderTest do
   test "Reminders can be added" do
     {:ok, user} = User.save("bob", "bob@example.com", UUID.uuid4(:hex))
 
-    {:ok, reminder} = Reminder.save(user, "First reminder")
+    {:ok, reminder} = Reminder.save(user.access_token, "First reminder")
 
     assert reminder.reminder == "First reminder"
     assert reminder.user_id == user.id
@@ -19,11 +19,11 @@ defmodule Data.ReminderTest do
   test "Reminders can be retrieved" do
     {:ok, user} = User.save("bob", "bob@example.com", UUID.uuid4(:hex))
 
-    {:ok, _} = Reminder.save(user, "First reminder")
-    {:ok, _} = Reminder.save(user, "Second reminder")
+    {:ok, _} = Reminder.save(user.access_token, "First reminder")
+    {:ok, _} = Reminder.save(user.access_token, "Second reminder")
 
-    first_reminder  = Reminder.get(user) |> Enum.at(0)
-    second_reminder = Reminder.get(user) |> Enum.at(1)
+    first_reminder  = Reminder.get(user.access_token) |> Enum.at(0)
+    second_reminder = Reminder.get(user.access_token) |> Enum.at(1)
 
     assert first_reminder.reminder  == "First reminder"
     assert second_reminder.reminder == "Second reminder"
@@ -32,14 +32,14 @@ defmodule Data.ReminderTest do
   test "Reminders can be deleted" do
     {:ok, user} = User.save("bob", "bob@example.com", UUID.uuid4(:hex))
 
-    {:ok, first_reminder}  = Reminder.save(user, "First reminder")
-    {:ok, _} = Reminder.save(user, "Second reminder")
+    {:ok, first_reminder}  = Reminder.save(user.access_token, "First reminder")
+    {:ok, _} = Reminder.save(user.access_token, "Second reminder")
 
-    assert Enum.count(Reminder.get(user)) == 2
+    assert Enum.count(Reminder.get(user.access_token)) == 2
 
     Reminder.delete(first_reminder.id)
 
-    assert Enum.count(Reminder.get(user)) == 1
+    assert Enum.count(Reminder.get(user.access_token)) == 1
   end
 end
 

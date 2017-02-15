@@ -19,19 +19,21 @@ defmodule Data.Reminder do
     |> cast(params, @allowed_fields)
   end
 
-  def save(user, reminder) do
+  def save(access_token, reminder) do
+    user = Data.User.get(access_token)
     changeset = changeset(
                            %Reminder{},
                            %{user_id: user.id, reminder: reminder}
                          )
 
     case Repo.insert(changeset) do
-      {:ok, saved_reminder}     -> {:ok, saved_reminder}
-      {:error, changeset} -> {:error, changeset}
+      {:ok, saved_reminder} -> {:ok, saved_reminder}
+      {:error, changeset}   -> {:error, changeset}
     end
   end
 
-  def get(user) do
+  def get(key) do
+    user = Data.User.get(key)
     (from "reminders",
      where: [user_id: ^user.id ], select: [:id, :reminder])
     |> Repo.all
