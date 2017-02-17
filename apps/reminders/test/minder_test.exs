@@ -1,6 +1,6 @@
-defmodule Domain.MinderTest do
+defmodule Reminders.MinderTest do
   use ExUnit.Case, async: true
-  alias Domain.Minder
+  alias Reminders.Minder
 
   setup do
     Minder.start_link(MinderTest)

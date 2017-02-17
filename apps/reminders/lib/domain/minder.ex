@@ -1,4 +1,4 @@
-defmodule Domain.Minder do
+defmodule Reminders.Minder do
   use GenServer
 
   # Public API
