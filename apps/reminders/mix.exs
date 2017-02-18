@@ -38,8 +38,9 @@ defmodule Reminders.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:data, in_umbrella: true},
-      {:uuid, "~> 1.1"},
+      {:uuid,     "~> 1.1"},
+      {:postgrex, ">= 0.0.0"},
+      {:ecto,     "~> 2.1.0"},
     ]
   end
 end

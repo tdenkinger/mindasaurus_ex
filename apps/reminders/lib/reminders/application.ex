@@ -1,4 +1,4 @@
-defmodule Data.Application do
+defmodule Reminders.Application do
   @moduledoc false
 
   use Application
@@ -7,10 +7,11 @@ defmodule Data.Application do
     import Supervisor.Spec, warn: false
 
     children = [
-      supervisor(Data.Repo, []),
+      worker(Reminders.Minder, [MinderMain]),
+      worker(Reminders.Repo, []),
     ]
 
-    opts = [strategy: :one_for_one, name: Data.Supervisor]
+    opts = [strategy: :one_for_one, name: Reminders.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

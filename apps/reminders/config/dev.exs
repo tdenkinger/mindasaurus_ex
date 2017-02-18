@@ -1,6 +1,6 @@
 use Mix.Config
 
-config :data, Data.Repo,[
+config :reminders, Reminders.Repo,[
   adapter: Ecto.Adapters.Postgres,
   database: "reminders_dev",
   username: "postgres",

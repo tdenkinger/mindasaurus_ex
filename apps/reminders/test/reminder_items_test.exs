@@ -1,10 +1,11 @@
-defmodule Data.ReminderTest do
-  use ExUnit.Case, async: true
+defmodule Reminders.ReminderTest do
+  use ExUnit.Case
 
-  alias Data.{Reminder, User, Repo}
+  alias Reminders.{Reminder, User, Repo}
 
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
+    Ecto.Adapters.SQL.Sandbox.mode(Repo, { :shared, self() })
   end
 
   test "Reminders can be added" do

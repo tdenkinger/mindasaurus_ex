@@ -1,10 +1,11 @@
-defmodule Data.UserTest do
-  use ExUnit.Case, async: true
+defmodule Reminders.UserTest do
+  use ExUnit.Case
 
-  alias Data.{User, Repo}
+  alias Reminders.{User, Repo}
 
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
+    Ecto.Adapters.SQL.Sandbox.mode(Repo, { :shared, self() })
   end
 
   test "Users can be created" do

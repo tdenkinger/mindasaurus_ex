@@ -17,7 +17,7 @@ defmodule Reminders.Minder do
   end
 
   def handle_call({:create, access_token, new_reminder}, _from, state) do
-    case Data.Reminder.save(access_token, new_reminder) do
+    case Reminders.Reminder.save(access_token, new_reminder) do
       {:ok, _reminder} -> {:reply, :ok, state}
       {:error, error}  -> {:reply, {:error, error}, state}
        _               -> {:reply, :error, state}
@@ -25,7 +25,7 @@ defmodule Reminders.Minder do
   end
 
   def handle_call({:get, key}, _from, state) do
-    {:reply, Data.Reminder.get(key), state}
+    {:reply, Reminders.Reminder.get(key), state}
   end
 end
 

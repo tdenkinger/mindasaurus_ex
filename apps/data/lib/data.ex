@@ -1,3 +1,0 @@
-defmodule Data do
-
-end

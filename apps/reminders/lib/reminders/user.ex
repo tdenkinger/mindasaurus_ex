@@ -1,9 +1,9 @@
-defmodule Data.User do
+defmodule Reminders.User do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Data.{Reminder, User, Repo}
+  alias Reminders.{Reminder, User, Repo}
 
   schema "users" do
     field :username, :string

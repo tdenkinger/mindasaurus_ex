@@ -1,9 +1,9 @@
-defmodule Data.Reminder do
+defmodule Reminders.Reminder do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Data.{Reminder, Repo}
+  alias Reminders.{Reminder, Repo}
 
   schema "reminders" do
     field :reminder, :string
@@ -20,7 +20,7 @@ defmodule Data.Reminder do
   end
 
   def save(access_token, reminder) do
-    user = Data.User.get(access_token)
+    user = Reminders.User.get(access_token)
     changeset = changeset(
                            %Reminder{},
                            %{user_id: user.id, reminder: reminder}
@@ -33,7 +33,7 @@ defmodule Data.Reminder do
   end
 
   def get(key) do
-    user = Data.User.get(key)
+    user = Reminders.User.get(key)
     (from "reminders",
      where: [user_id: ^user.id ], select: [:id, :reminder])
     |> Repo.all
