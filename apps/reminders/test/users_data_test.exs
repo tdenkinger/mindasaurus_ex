@@ -25,5 +25,21 @@ defmodule Reminders.UserTest do
     assert user.username == "bob"
     assert user.email    == "bob@example.com"
   end
+
+  test "Changeset with valid attributes" do
+    changeset = User.changeset(%User{}, %{email: "bob@example.com",
+                                          username: "bab",
+                                          access_token: UUID.uuid4(:hex)
+                                         })
+    assert changeset.valid?
+  end
+
+  test "Changeset with invalid attributes" do
+    changeset = User.changeset(%User{}, %{email: "bob@example.com",
+                                          username: "ab",
+                                          access_token: UUID.uuid4(:hex)
+                                         })
+    refute changeset.valid?
+  end
 end
 

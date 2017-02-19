@@ -17,7 +17,9 @@ defmodule Reminders.User do
   @allowed_fields ~w(username email access_token)
 
   def changeset(record, params \\ :empty) do
-    record |> cast(params, @allowed_fields)
+    record
+    |> cast(params, @allowed_fields)
+    |> validate_length(:username, min: 3, max: 255)
   end
 
   def save(username, email, access_token) do
