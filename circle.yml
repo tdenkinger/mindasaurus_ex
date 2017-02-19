@@ -3,6 +3,11 @@ machine:
     PATH: "$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
     MIX_ENV: test
 
+general:
+  branches:
+    only:
+      - master
+
 dependencies:
   pre:
     - if ! asdf | grep version; then git clone https://github.com/asdf-vm/asdf.git ~/.asdf; fi
