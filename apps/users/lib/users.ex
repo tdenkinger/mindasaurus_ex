@@ -1,2 +1,0 @@
-defmodule Users do
-end

@@ -1,8 +1,8 @@
-defmodule Users.Mixfile do
+defmodule Accounts.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :users,
+    [app: :accounts,
      version: "0.1.0",
      build_path: "../../_build",
      config_path: "../../config/config.exs",
@@ -16,7 +16,7 @@ defmodule Users.Mixfile do
 
   def application do
     [extra_applications: [:logger, :comeonin],
-     mod: {Users.Application, []}]
+     mod: {Accounts.Application, []}]
   end
 
   defp deps do

@@ -1,6 +1,6 @@
 use Mix.Config
 
-config :users, Users.Repo,[
+config :accounts, Accounts.Repo,[
   adapter: Ecto.Adapters.Postgres,
   database: "reminders_test",
   username: "postgres",
