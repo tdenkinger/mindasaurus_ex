@@ -7,6 +7,7 @@ defmodule Accounts.Application do
     import Supervisor.Spec, warn: false
 
     children = [
+      worker(Accounts.Handler, [AccountHandler]),
       worker(Accounts.Repo, []),
     ]
 
