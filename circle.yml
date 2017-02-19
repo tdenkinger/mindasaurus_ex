@@ -26,7 +26,6 @@ test:
 
 database:
   override:
-    - createuser -s -d postgres
     - createdb reminders_test
     - mix ecto.migrate
 
