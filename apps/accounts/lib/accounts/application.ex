@@ -7,8 +7,7 @@ defmodule Accounts.Application do
     import Supervisor.Spec, warn: false
 
     children = [
-      # Starts a worker by calling: Users.Worker.start_link(arg1, arg2, arg3)
-      # worker(Users.Worker, [arg1, arg2, arg3]),
+      worker(Accounts.Repo, []),
     ]
 
     opts = [strategy: :one_for_one, name: Accounts.Supervisor]
