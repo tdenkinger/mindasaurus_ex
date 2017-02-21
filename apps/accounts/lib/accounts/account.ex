@@ -14,7 +14,7 @@ defmodule Accounts.Account do
     timestamps()
   end
 
-  @allowed_fields ~w(username email access_token)
+  @allowed_fields ~w(username email access_token password_hash)
 
   def registration_changeset(record, params \\ :empty) do
     record
@@ -34,9 +34,9 @@ defmodule Accounts.Account do
     case Repo.insert(changeset) do
       {:ok,  user} ->
         {:ok, %{id: user.id, username: user.username, email: user.email,
-                access_token: user.access_token}}
+          access_token: user.access_token, password_hash: user.password_hash}}
 
-      {:error, _} -> {:error, changeset}
+      {:error, changeset} -> {:error, changeset}
     end
   end
 end

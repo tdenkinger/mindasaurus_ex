@@ -19,9 +19,8 @@ defmodule Accounts.Handler do
 
   def handle_call({:create, username, email, password}, _from, state) do
     case Accounts.Account.create(username, email, password) do
-      {:ok, account} -> {:reply, {:ok, account}, state}
+      {:ok, account}  -> {:reply, {:ok, account}, state}
       {:error, error} -> {:reply, {:error, error}, state}
-       _              -> {:reply, :error, state}
     end
   end
 end
