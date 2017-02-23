@@ -4,5 +4,9 @@ defmodule Web.AccountView do
   def render("create.json", account) do
     %{ access_token: account.access_token }
   end
+
+  def render("show.json", account) do
+    %{access_token: account.access_token}
+  end
 end
 

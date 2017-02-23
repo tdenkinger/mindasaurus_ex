@@ -15,5 +15,13 @@ defmodule AccountsTest do
     assert user.username     == "bob"
     assert user.email        == "bob@example.com"
   end
+
+  test "Access token can be retrieved via username/password" do
+    {:ok, user} = Account.create("bob", "bob@example.com", "mysecret")
+    {:ok, session} = Account.login("bob", "mysecret")
+
+    assert session.access_token == user.access_token
+  end
+
 end
 

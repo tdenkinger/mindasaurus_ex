@@ -18,5 +18,13 @@ defmodule Accounts.HandlerTest do
     assert account.email        == "bob@example.com"
     refute account.access_token == nil
   end
+
+  test "Logs into an account with username/password", %{handler: handler} do
+    {:ok, account} = Handler.create(handler, "bob", "bob@example.com", "mysecret")
+    {:ok, session} = Handler.login(handler, "bob", "mysecret")
+
+    assert session.access_token == account.access_token
+  end
+
 end
 

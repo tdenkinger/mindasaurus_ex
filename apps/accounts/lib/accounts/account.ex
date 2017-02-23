@@ -1,6 +1,8 @@
 defmodule Accounts.Account do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
+  import Comeonin.Bcrypt, only: [checkpw: 2, hashpwsalt: 1]
 
   alias Accounts.{Account, Repo}
 
@@ -22,12 +24,22 @@ defmodule Accounts.Account do
     |> validate_length(:username, min: 3, max: 255)
   end
 
+  def login(username, password) do
+    user = Repo.get_by(Account, username: username)
+
+    cond do
+      user && checkpw(password, user.password_hash) ->
+           {:ok, %{access_token: user.access_token}}
+      true -> {:error, "no user"}
+    end
+  end
+
   def create(username, email, password) do
     changeset = registration_changeset(
                         %Account{},
                         %{ username: username, email: email,
                            access_token: UUID.uuid4(:hex),
-                           password_hash: Comeonin.Bcrypt.hashpwsalt(password)
+                           password_hash: hashpwsalt(password)
                          }
                        )
 
