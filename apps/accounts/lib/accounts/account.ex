@@ -1,7 +1,6 @@
 defmodule Accounts.Account do
   use Ecto.Schema
   import Ecto.Changeset
-  import Ecto.Query
   import Comeonin.Bcrypt, only: [checkpw: 2, hashpwsalt: 1]
 
   alias Accounts.{Account, Repo}
