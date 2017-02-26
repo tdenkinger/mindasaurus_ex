@@ -32,11 +32,13 @@ defmodule Reminders.Reminder do
     end
   end
 
-  def get(key) do
-    user = Reminders.User.get(key)
-    (from "reminders",
-     where: [user_id: ^user.id ], select: [:id, :reminder])
-    |> Repo.all
+  def get(access_token) do
+    Repo.all(
+             from r in Reminder,
+             join: u in assoc(r, :user),
+             where: u.access_token == ^access_token,
+             select: %{id: r.id, reminder: r.reminder}
+           )
   end
 
   def delete(access_token, reminder_id) do
