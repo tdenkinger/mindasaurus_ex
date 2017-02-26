@@ -21,7 +21,9 @@ case of this incarnation, I'm playing with Elixir.
 ## Status
 
 Currently a user can create an account and then save reminders using an
-API access key. They can also retrieve reminders by account API key.
+API access key. They can also retrieve reminders by account API key. The
+ultimate goal will be to use sessions which can be expired and logged out
+of.
 
 This is an Elixir application that uses the umbrella app concept. The API
 UI is a Phoenix app that uses the underlying applications for domain logic
