@@ -27,12 +27,4 @@ This is an Elixir application that uses the umbrella app concept. The API
 UI is a Phoenix app that uses the underlying applications for domain logic
 and database access.
 
-## Todos
-
-1. Account login
-1. New account verification step
-1. Password reset
-1. API key reset
-1. Add tagging to a reminder
-1. Reminders should be viewable in a web interface
 
