@@ -39,7 +39,7 @@ defmodule Reminders.MinderTest do
     reminders = Minder.get(minder, user.access_token)
 
     reminder_to_delete = (List.first(reminders)).id
-    {:ok, reminder} = Minder.delete(minder, user.access_token, reminder_to_delete)
+    {:ok, _reminder} = Minder.delete(minder, user.access_token, reminder_to_delete)
 
     reminders = Minder.get(minder, user.access_token)
     assert Enum.count(reminders) == 1

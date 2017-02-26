@@ -38,7 +38,7 @@ defmodule Reminders.ReminderTest do
 
     assert Enum.count(Reminder.get(user.access_token)) == 2
 
-    Reminder.delete(first_reminder.id)
+    Reminder.delete(user.access_token, first_reminder.id)
 
     assert Enum.count(Reminder.get(user.access_token)) == 1
   end
