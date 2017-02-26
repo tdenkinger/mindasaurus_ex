@@ -10,6 +10,10 @@ defmodule Reminders.Minder do
   def create(server, key, value), do: GenServer.call(server, {:create, key, value})
   def get(server, key), do: GenServer.call(server, {:get, key})
 
+  def delete(server, access_token, reminder_id) do
+    GenServer.call(server, {:delete, access_token, reminder_id})
+  end
+
   # Server callbacks
 
   def init(:ok) do
@@ -26,6 +30,14 @@ defmodule Reminders.Minder do
 
   def handle_call({:get, key}, _from, state) do
     {:reply, Reminders.Reminder.get(key), state}
+  end
+
+  def handle_call({:delete, access_token, reminder_id}, _from, state) do
+    case Reminders.Reminder.delete(access_token, reminder_id) do
+      {:ok, reminder} -> {:reply, {:ok, reminder}, state}
+      {:error, error} -> {:reply, {:error, error}, state}
+      _               -> {:reply, :error, state}
+    end
   end
 end
 

@@ -3,7 +3,7 @@ defmodule Reminders.Reminder do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Reminders.{Reminder, Repo}
+  alias Reminders.{Reminder, Repo, User}
 
   schema "reminders" do
     field :reminder, :string
@@ -39,11 +39,20 @@ defmodule Reminders.Reminder do
     |> Repo.all
   end
 
-  def delete(reminder_id) do
-    reminder = Repo.get!(Reminder, reminder_id)
-    case Repo.delete(reminder) do
-      {:ok, deleted_reminder}-> {:ok, deleted_reminder}
-      {:error, changeset}    -> {:error, changeset}
+  def delete(access_token, reminder_id) do
+    reminder =
+      Reminder
+      |> where([r], r.id == ^reminder_id)
+      |> preload(:user)
+      |> Repo.one
+
+    case reminder.user.access_token == access_token do
+      true ->
+        case Repo.delete(reminder) do
+          {:ok, deleted_reminder}-> {:ok, deleted_reminder}
+          {:error, changeset}    -> {:error, changeset}
+        end
+      _ -> {:error, "unauthorized"}
     end
   end
 end

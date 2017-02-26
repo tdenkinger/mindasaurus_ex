@@ -13,6 +13,13 @@ defmodule Web.MinderView do
     }
   end
 
+  def render("delete.json", %{status: status, message: message}) do
+    %{
+      status: status,
+      message: message
+    }
+  end
+
   defp reminder_json(%{id: id, reminder: reminder}) do
     %{id: id, reminder: reminder}
   end
