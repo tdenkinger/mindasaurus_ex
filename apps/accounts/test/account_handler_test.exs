@@ -12,18 +12,18 @@ defmodule Accounts.HandlerTest do
   end
 
   test "Creates an account", %{handler: handler} do
-    {:ok, account} = Handler.create(handler, "bob", "bob@example.com", "mysecret")
+    {:ok, user} = Handler.create(handler, "bob", "bob@example.com", "password")
 
-    assert account.username     == "bob"
-    assert account.email        == "bob@example.com"
-    refute account.access_token == nil
+    assert user.username     == "bob"
+    assert user.email        == "bob@example.com"
+    refute user.access_token == nil
   end
 
   test "Logs into an account with username/password", %{handler: handler} do
-    {:ok, account} = Handler.create(handler, "bob", "bob@example.com", "mysecret")
-    {:ok, session} = Handler.login(handler, "bob", "mysecret")
+    {:ok, user} = Handler.create(handler, "bob", "bob@example.com", "password")
+    {:ok, session} = Handler.login(handler, "bob", "password")
 
-    assert session.access_token == account.access_token
+    assert session.access_token == user.access_token
   end
 
 end
