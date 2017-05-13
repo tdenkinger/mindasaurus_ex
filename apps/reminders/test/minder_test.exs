@@ -1,7 +1,7 @@
 defmodule Reminders.MinderTest do
   use ExUnit.Case, async: true
 
-  alias Reminders.{Minder, Repo, User}
+  alias Reminders.{Minder, Repo}
 
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
@@ -9,14 +9,14 @@ defmodule Reminders.MinderTest do
 
     Minder.start_link(MinderTest)
 
-    {:ok, user} = User.save("bob", "bob@example.com", UUID.uuid4(:hex))
+    {:ok, user} = Accounts.Handler.create(AccountHandler, "bob", "bob@example.com", "password")
 
     %{minder: MinderTest, user: user}
   end
 
   test "accepts a reminder", %{minder: minder, user: user} do
-    # assert Minder.create(minder, user.access_token, "buy coffee") == :ok
-    # assert Minder.create(minder, user.access_token, "eat food") == :ok
+    assert Minder.create(minder, user.access_token, "buy coffee") == :ok
+    assert Minder.create(minder, user.access_token, "eat food") == :ok
   end
 
   test "returns all reminders for a uuid", %{minder: minder, user: user} do
