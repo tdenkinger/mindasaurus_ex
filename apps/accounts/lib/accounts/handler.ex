@@ -15,10 +15,21 @@ defmodule Accounts.Handler do
     GenServer.call(server, {:login, username, password})
   end
 
+  def get_user(server, access_token) do
+    GenServer.call(server, {:get_user, access_token})
+  end
+
   # Server callbacks
 
   def init(:ok) do
     {:ok, %{}}
+  end
+
+  def handle_call({:get_user, access_token}, _from, state) do
+    case Accounts.Account.get(access_token) do
+      {:ok, user}     -> {:reply, {:ok, %{id: user.id}}, state}
+      {:error, error} -> {:reply, {:error, error}, state}
+    end
   end
 
   def handle_call({:login, username, password}, _from, state) do

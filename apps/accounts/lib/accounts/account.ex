@@ -50,5 +50,14 @@ defmodule Accounts.Account do
       {:error, changeset} -> {:error, changeset}
     end
   end
+
+  def get(access_token) do
+    user = Repo.get_by(Account, access_token: access_token)
+    cond do
+      user -> {:ok, %{id: user.id}}
+      true -> {:error, "no user"}
+    end
+  end
+
 end
 
