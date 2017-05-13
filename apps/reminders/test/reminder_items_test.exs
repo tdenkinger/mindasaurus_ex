@@ -1,7 +1,7 @@
 defmodule Reminders.ReminderTest do
   use ExUnit.Case
 
-  alias Reminders.{Reminder, User, Repo}
+  alias Reminders.{Reminder, Repo}
 
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
@@ -9,8 +9,7 @@ defmodule Reminders.ReminderTest do
   end
 
   test "Reminders can be added" do
-    {:ok, user} = User.save("bob", "bob@example.com", UUID.uuid4(:hex))
-
+    {:ok, user} = Accounts.Handler.create(AccountHandler, "bob", "bob@example.com", "password")
     {:ok, reminder} = Reminder.save(user.access_token, "First reminder")
 
     assert reminder.reminder == "First reminder"
@@ -18,7 +17,7 @@ defmodule Reminders.ReminderTest do
   end
 
   test "Reminders can be retrieved" do
-    {:ok, user} = User.save("bob", "bob@example.com", UUID.uuid4(:hex))
+    {:ok, user} = Accounts.Handler.create(AccountHandler, "bob", "bob@example.com", "password")
 
     {:ok, _} = Reminder.save(user.access_token, "First reminder")
     {:ok, _} = Reminder.save(user.access_token, "Second reminder")
@@ -31,7 +30,7 @@ defmodule Reminders.ReminderTest do
   end
 
   test "Reminders can be deleted" do
-    {:ok, user} = User.save("bob", "bob@example.com", UUID.uuid4(:hex))
+    {:ok, user} = Accounts.Handler.create(AccountHandler, "bob", "bob@example.com", "password")
 
     {:ok, first_reminder}  = Reminder.save(user.access_token, "First reminder")
     {:ok, _} = Reminder.save(user.access_token, "Second reminder")

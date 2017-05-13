@@ -3,11 +3,12 @@ defmodule Reminders.Reminder do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Reminders.{Reminder, Repo, User}
+  alias Reminders.{Reminder, Repo}
+  alias Accounts.Account
 
   schema "reminders" do
     field :reminder, :string
-    belongs_to :user, User
+    belongs_to :user, Account
 
     timestamps()
   end
@@ -20,7 +21,8 @@ defmodule Reminders.Reminder do
   end
 
   def save(access_token, reminder) do
-    user = Reminders.User.get(access_token)
+    {:ok, user} = Accounts.Handler.get_user(AccountHandler, access_token)
+
     changeset = changeset(
                            %Reminder{},
                            %{user_id: user.id, reminder: reminder}
