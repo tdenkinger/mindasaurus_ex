@@ -7,7 +7,7 @@ defmodule Reminders.Application do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(Reminders.Gateway, [Gateway]),
+      worker(Reminders.Gateway, [ReminderGateway]),
       worker(Reminders.Repo, []),
     ]
 
