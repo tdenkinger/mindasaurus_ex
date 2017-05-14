@@ -1,2 +1,0 @@
-defmodule Accounts do
-end
