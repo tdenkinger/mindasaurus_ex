@@ -1,5 +1,5 @@
 defmodule Reminders.GatewayTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
 
   alias Reminders.{Gateway, Repo}
 

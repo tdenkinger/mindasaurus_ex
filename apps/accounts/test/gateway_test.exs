@@ -1,5 +1,5 @@
 defmodule Accounts.GatewayTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
 
   alias Accounts.{Gateway, Repo}
 
