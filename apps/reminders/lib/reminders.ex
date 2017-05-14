@@ -1,2 +1,0 @@
-defmodule Reminders do
-end
