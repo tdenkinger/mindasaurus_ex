@@ -9,7 +9,8 @@ defmodule Reminders.GatewayTest do
 
     Gateway.start_link(GatewayTest)
 
-    {:ok, user} = Accounts.Handler.create(AccountHandler, "bob", "bob@example.com", "password")
+    Accounts.Gateway.start_link(AccountGateway)
+    {:ok, user} = Accounts.Gateway.create(AccountGateway, "bob", "bob@example.com", "password")
 
     %{minder: GatewayTest, user: user}
   end
@@ -62,6 +63,5 @@ defmodule Reminders.GatewayTest do
 
     assert Enum.count(reminders) == 2
   end
-
 end
 

@@ -6,18 +6,21 @@ defmodule Reminders.ReminderTest do
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
     Ecto.Adapters.SQL.Sandbox.mode(Repo, { :shared, self() })
+
+    Accounts.Gateway.start_link(AccountGateway)
+    {:ok, account_gateway: AccountGateway}
   end
 
-  test "Reminders can be added" do
-    {:ok, user} = Accounts.Handler.create(AccountHandler, "bob", "bob@example.com", "password")
+  test "Reminders can be added", %{account_gateway: account_gateway} do
+    {:ok, user} = Accounts.Gateway.create(account_gateway, "bob", "bob@example.com", "password")
     {:ok, reminder} = Reminder.save(user.access_token, "First reminder")
 
     assert reminder.reminder == "First reminder"
     assert reminder.user_id == user.id
   end
 
-  test "Reminders can be retrieved" do
-    {:ok, user} = Accounts.Handler.create(AccountHandler, "bob", "bob@example.com", "password")
+  test "Reminders can be retrieved", %{account_gateway: account_gateway} do
+    {:ok, user} = Accounts.Gateway.create(account_gateway, "bob", "bob@example.com", "password")
 
     {:ok, _} = Reminder.save(user.access_token, "First reminder")
     {:ok, _} = Reminder.save(user.access_token, "Second reminder")
@@ -29,8 +32,8 @@ defmodule Reminders.ReminderTest do
     assert second_reminder.reminder == "Second reminder"
   end
 
-  test "Reminders can be deleted" do
-    {:ok, user} = Accounts.Handler.create(AccountHandler, "bob", "bob@example.com", "password")
+  test "Reminders can be deleted", %{account_gateway: account_gateway} do
+    {:ok, user} = Accounts.Gateway.create(account_gateway, "bob", "bob@example.com", "password")
 
     {:ok, first_reminder}  = Reminder.save(user.access_token, "First reminder")
     {:ok, _} = Reminder.save(user.access_token, "Second reminder")
