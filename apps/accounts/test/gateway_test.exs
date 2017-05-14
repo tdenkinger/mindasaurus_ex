@@ -1,18 +1,18 @@
-defmodule Accounts.HandlerTest do
+defmodule Accounts.GatewayTest do
   use ExUnit.Case, async: true
 
-  alias Accounts.{Handler, Repo}
+  alias Accounts.{Gateway, Repo}
 
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
     Ecto.Adapters.SQL.Sandbox.mode(Repo, { :shared, self() })
 
-    Handler.start_link(AccountHandlerTest)
-    {:ok, handler: AccountHandlerTest}
+    Gateway.start_link(GatewayTest)
+    {:ok, handler: GatewayTest}
   end
 
   test "Creates an account", %{handler: handler} do
-    {:ok, user} = Handler.create(handler, "bob", "bob@example.com", "password")
+    {:ok, user} = Gateway.create(handler, "bob", "bob@example.com", "password")
 
     assert user.username     == "bob"
     assert user.email        == "bob@example.com"
@@ -20,8 +20,8 @@ defmodule Accounts.HandlerTest do
   end
 
   test "Logs into an account with username/password", %{handler: handler} do
-    {:ok, user} = Handler.create(handler, "bob", "bob@example.com", "password")
-    {:ok, session} = Handler.login(handler, "bob", "password")
+    {:ok, user} = Gateway.create(handler, "bob", "bob@example.com", "password")
+    {:ok, session} = Gateway.login(handler, "bob", "password")
 
     assert session.access_token == user.access_token
   end

@@ -1,9 +1,9 @@
-defmodule Accounts.Handler do
+defmodule Accounts.Gateway do
   use GenServer
 
   # Public API
 
-  def start_link(name \\ AccountHandler) do
+  def start_link(name \\ Gateway) do
     GenServer.start_link(__MODULE__, :ok, [name: name])
   end
 
