@@ -1,9 +1,9 @@
-defmodule Reminders.Minder do
+defmodule Reminders.Gateway do
   use GenServer
 
   # Public API
 
-  def start_link(name \\ MinderMain) do
+  def start_link(name \\ ReminderGateway) do
     GenServer.start_link(__MODULE__, :ok, [name: name])
   end
 
