@@ -21,7 +21,7 @@ defmodule Reminders.Reminder do
   end
 
   def save(access_token, reminder) do
-    {:ok, user} = Accounts.Handler.get_user(AccountHandler, access_token)
+    {:ok, user} = Accounts.Gateway.get_user(Gateway, access_token)
 
     changeset = changeset(
                            %Reminder{},
