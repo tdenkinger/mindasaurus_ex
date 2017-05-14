@@ -3,7 +3,7 @@ defmodule Accounts.Gateway do
 
   # Public API
 
-  def start_link(name \\ Gateway) do
+  def start_link(name \\ AccountGateway) do
     GenServer.start_link(__MODULE__, :ok, [name: name])
   end
 
